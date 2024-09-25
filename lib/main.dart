@@ -1,3 +1,5 @@
+// O vídeo 1.3 não possui código, pois apenas configuramos o emulador.
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +14,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Text('MyApp'),
+          child: Text("Banco D'Ouro"),
         ),
       ),
     );
