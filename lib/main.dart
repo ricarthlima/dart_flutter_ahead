@@ -11,10 +11,35 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Text("Banco D'Ouro"),
+        body: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                "SISTEMA DE GESTÃO DE CONTAS",
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 32,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(label: Text("E-mail")),
+              ),
+              TextFormField(
+                decoration: const InputDecoration(label: Text("Senha")),
+                obscureText: true,
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text("Entrar"),
+              ),
+            ],
+          ),
         ),
       ),
     );
