@@ -1,3 +1,4 @@
+import 'package:dart_flutter_ahead/ui/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -49,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                       },
                       style: const ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(
-                          Color(0xFFFFa902),
+                          AppColors.orange,
                         ),
                       ),
                       child: const Text(

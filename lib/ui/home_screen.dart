@@ -1,3 +1,4 @@
+import 'package:dart_flutter_ahead/ui/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,7 +9,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Sistema de Gestão de Contas"),
-        backgroundColor: const Color(0xFFf0f0f0),
+        backgroundColor: AppColors.lightGrey,
         actions: [
           IconButton(
             onPressed: () {
