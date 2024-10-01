@@ -5,13 +5,20 @@ import 'package:flutter/material.dart';
 
 import '../models/account.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   Future<List<Account>> _futureGetAll = AccountService().getAll();
 
   Future<void> _refresh() async {
-    _futureGetAll = AccountService().getAll();
+    setState(() {
+      _futureGetAll = AccountService().getAll();
+    });
   }
 
   @override
@@ -34,7 +41,7 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: RefreshIndicator(
           onRefresh: _refresh,
-          child: FutureBuilder(
+          child: FutureBuilder<List<Account>>(
             future: _futureGetAll,
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
