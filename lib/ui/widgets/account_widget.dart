@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dart_flutter_ahead/models/account.dart';
 import 'package:dart_flutter_ahead/ui/styles/colors.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class AccountWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      margin: const EdgeInsets.only(bottom: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -29,7 +32,7 @@ class AccountWidget extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-              Text("ID: ${account.id}"),
+              Text("ID: ${account.id.substring(0, min(5, account.id.length))}"),
               Text("Saldo: R\$ ${account.balance.toStringAsFixed(2)}"),
               Text(
                 "Tipo: ${account.accountType ?? "Sem tipo de conta declarado."}",

@@ -1,6 +1,9 @@
 import 'package:dart_flutter_ahead/services/account_service.dart';
 import 'package:dart_flutter_ahead/ui/styles/colors.dart';
+import 'package:dart_flutter_ahead/ui/widgets/account_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../models/account.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -34,7 +37,17 @@ class HomeScreen extends StatelessWidget {
               case ConnectionState.active:
                 return const Center(child: CircularProgressIndicator());
               case ConnectionState.done:
-                return Center(child: Text("${snapshot.data?.length}"));
+                if (snapshot.data != null && snapshot.data!.isNotEmpty) {
+                  List<Account> listAccount = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: listAccount.length,
+                    itemBuilder: (context, index) {
+                      return AccountWidget(account: listAccount[index]);
+                    },
+                  );
+                } else {
+                  return const Center(child: Text("Nenhuma conta encontrada."));
+                }
             }
           },
         ),
