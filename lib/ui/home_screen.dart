@@ -1,6 +1,5 @@
-import 'package:dart_flutter_ahead/models/account.dart';
+import 'package:dart_flutter_ahead/services/account_service.dart';
 import 'package:dart_flutter_ahead/ui/styles/colors.dart';
-import 'package:dart_flutter_ahead/ui/widgets/account_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,14 +23,20 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: AccountWidget(
-          account: Account(
-            id: "ID001",
-            name: "Ricarth",
-            lastName: "Lima",
-            balance: 1511.24,
-            accountType: null,
-          ),
+        child: FutureBuilder(
+          future: AccountService().getAll(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return const Center(child: Text("Nenhuma conexão encontrada."));
+              case ConnectionState.waiting:
+                return const Center(child: CircularProgressIndicator());
+              case ConnectionState.active:
+                return const Center(child: CircularProgressIndicator());
+              case ConnectionState.done:
+                return Center(child: Text("${snapshot.data?.length}"));
+            }
+          },
         ),
       ),
     );
