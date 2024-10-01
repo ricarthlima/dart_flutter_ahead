@@ -12,7 +12,10 @@ class AccountService {
   String url = "https://api.github.com/gists/413c0aefe6c6abc464581c29029c8ace";
 
   Future<List<Account>> getAll() async {
-    Response response = await get(Uri.parse(url));
+    Response response = await get(
+      Uri.parse(url),
+      headers: {"Authorization": "Bearer $githubApiKey"},
+    );
     _streamController.add("${DateTime.now()} | Requisição de leitura.");
 
     Map<String, dynamic> mapResponse = json.decode(response.body);
