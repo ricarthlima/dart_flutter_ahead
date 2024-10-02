@@ -1,5 +1,6 @@
 import 'package:dart_flutter_ahead/services/account_service.dart';
 import 'package:dart_flutter_ahead/ui/styles/colors.dart';
+import 'package:dart_flutter_ahead/ui/widgets/account_upinsert_modal.dart';
 import 'package:dart_flutter_ahead/ui/widgets/account_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,19 @@ class _HomeScreenState extends State<HomeScreen> {
             tooltip: "Sair",
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) {
+              return const AccountUpinsertModal();
+            },
+          );
+        },
+        backgroundColor: AppColors.orange,
+        child: const Icon(Icons.add),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
