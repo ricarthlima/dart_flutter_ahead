@@ -9,6 +9,8 @@ class AccountUpinsertModal extends StatefulWidget {
 }
 
 class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
+  String accountType = "AMBROSIA";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,6 +48,7 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
             const SizedBox(height: 16),
             Form(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   TextFormField(
                     decoration: const InputDecoration(
@@ -57,6 +60,38 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
                       label: Text("Último nome"),
                     ),
                   ),
+                  const SizedBox(height: 16),
+                  const Text("Tipo de conta"),
+                  DropdownButton<String>(
+                    value: accountType,
+                    isExpanded: true,
+                    onChanged: (value) {
+                      //lembrando que esse "value" é um lambda
+                      if (value != null) {
+                        setState(() {
+                          accountType = value;
+                        });
+                      }
+                    },
+                    items: const [
+                      DropdownMenuItem<String>(
+                        value: "AMBROSIA",
+                        child: Text("Ambrosia"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "CANJICA",
+                        child: Text("Canjica"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "PUDIM",
+                        child: Text("Pudim"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "BRIGADEIRO",
+                        child: Text("Brigadeiro"),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 32),
                   Row(
                     children: [
@@ -65,7 +100,10 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
                           onPressed: () {
                             buttonCancelClicked();
                           },
-                          child: const Text("Cancelar"),
+                          child: const Text(
+                            "Cancelar",
+                            style: TextStyle(color: Colors.black),
+                          ),
                         ),
                       ),
                       const SizedBox(width: 16),
