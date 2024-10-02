@@ -17,6 +17,8 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -118,9 +120,11 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {
-                            buttonCancelClicked();
-                          },
+                          onPressed: (isLoading)
+                              ? null
+                              : () {
+                                  buttonCancelClicked();
+                                },
                           child: const Text(
                             "Cancelar",
                             style: TextStyle(color: Colors.black),
@@ -137,10 +141,18 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
                             backgroundColor:
                                 WidgetStatePropertyAll(AppColors.orange),
                           ),
-                          child: const Text(
-                            "Adicionar",
-                            style: TextStyle(color: Colors.black),
-                          ),
+                          child: (isLoading)
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : const Text(
+                                  "Adicionar",
+                                  style: TextStyle(color: Colors.black),
+                                ),
                         ),
                       ),
                     ],
@@ -159,19 +171,25 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
   }
 
   buttonSaveClicked() {
-    if (_formKey.currentState!.validate()) {
-      String name = _nameController.text;
-      String lastName = _lastNameController.text;
+    if (!isLoading) {
+      if (_formKey.currentState!.validate()) {
+        setState(() {
+          isLoading = true;
+        });
 
-      Account newAccount = Account(
-        id: const Uuid().v1(),
-        name: name,
-        lastName: lastName,
-        balance: 0,
-        accountType: accountType,
-      );
+        String name = _nameController.text;
+        String lastName = _lastNameController.text;
 
-      AccountService().addAccount(newAccount);
+        Account newAccount = Account(
+          id: const Uuid().v1(),
+          name: name,
+          lastName: lastName,
+          balance: 0,
+          accountType: accountType,
+        );
+
+        AccountService().addAccount(newAccount);
+      }
     }
   }
 }
