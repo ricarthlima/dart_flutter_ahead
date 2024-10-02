@@ -1,5 +1,8 @@
+import 'package:dart_flutter_ahead/models/account.dart';
+import 'package:dart_flutter_ahead/services/account_service.dart';
 import 'package:dart_flutter_ahead/ui/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class AccountUpinsertModal extends StatefulWidget {
   const AccountUpinsertModal({super.key});
@@ -11,6 +14,8 @@ class AccountUpinsertModal extends StatefulWidget {
 class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
   String accountType = "AMBROSIA";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +58,7 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   TextFormField(
+                    controller: _nameController,
                     decoration: const InputDecoration(
                       label: Text("Nome"),
                     ),
@@ -64,6 +70,7 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
                     },
                   ),
                   TextFormField(
+                    controller: _lastNameController,
                     decoration: const InputDecoration(
                       label: Text("Último nome"),
                     ),
@@ -153,9 +160,18 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
 
   buttonSaveClicked() {
     if (_formKey.currentState!.validate()) {
-      print("Validado!");
-    } else {
-      print("Não validado");
+      String name = _nameController.text;
+      String lastName = _lastNameController.text;
+
+      Account newAccount = Account(
+        id: const Uuid().v1(),
+        name: name,
+        lastName: lastName,
+        balance: 0,
+        accountType: accountType,
+      );
+
+      AccountService().addAccount(newAccount);
     }
   }
 }
