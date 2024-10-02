@@ -10,6 +10,7 @@ class AccountUpinsertModal extends StatefulWidget {
 
 class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
   String accountType = "AMBROSIA";
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
             ),
             const SizedBox(height: 16),
             Form(
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -54,11 +56,23 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
                     decoration: const InputDecoration(
                       label: Text("Nome"),
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "O nome deve ser preenchido.";
+                      }
+                      return null;
+                    },
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
                       label: Text("Último nome"),
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "O último nome deve ser preenchido.";
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 16),
                   const Text("Tipo de conta"),
@@ -109,7 +123,9 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
                       const SizedBox(width: 16),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            buttonSaveClicked();
+                          },
                           style: const ButtonStyle(
                             backgroundColor:
                                 WidgetStatePropertyAll(AppColors.orange),
@@ -135,5 +151,11 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
     Navigator.pop(context);
   }
 
-  buttonSaveClicked() {}
+  buttonSaveClicked() {
+    if (_formKey.currentState!.validate()) {
+      print("Validado!");
+    } else {
+      print("Não validado");
+    }
+  }
 }
