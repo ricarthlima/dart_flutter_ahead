@@ -167,10 +167,10 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
   }
 
   buttonCancelClicked() {
-    Navigator.pop(context);
+    closeModal(false);
   }
 
-  buttonSaveClicked() {
+  buttonSaveClicked() async {
     if (!isLoading) {
       if (_formKey.currentState!.validate()) {
         setState(() {
@@ -188,8 +188,14 @@ class _AccountUpinsertModalState extends State<AccountUpinsertModal> {
           accountType: accountType,
         );
 
-        AccountService().addAccount(newAccount);
+        await AccountService().addAccount(newAccount);
+
+        closeModal(true);
       }
     }
+  }
+
+  closeModal(bool isAddedAccount) {
+    Navigator.pop(context, isAddedAccount);
   }
 }
